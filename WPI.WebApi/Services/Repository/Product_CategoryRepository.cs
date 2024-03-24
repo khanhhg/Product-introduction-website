@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using WPI.WebApi.Data;
 using WPI.WebApi.Data.Models;
 
 namespace WPI.WebApi.Services.Repository
