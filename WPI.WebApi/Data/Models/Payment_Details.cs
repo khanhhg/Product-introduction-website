@@ -1,0 +1,18 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace WPI.WebApi.Data.Models
+{
+    public class Payment_Details
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
+        public int Order_Id { get; set; }
+        public int Amount { get; set; }
+        public string Provider { get; set; }
+        public string Status { get; set; }
+        public DateTime? Created_at { get; set; }
+        public DateTime? Modified_at { get; set; }
+    }
+}
