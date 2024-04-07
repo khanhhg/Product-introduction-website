@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WPI.WebApi.Data.Models
+namespace WPI.WebApi.Data.Models.EF
 {
-    public class Product_Category
+    public class ProductCategory
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
