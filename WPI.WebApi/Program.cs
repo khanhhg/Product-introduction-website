@@ -2,16 +2,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel;
 using System.Text;
 using WPI.WebApi.Common;
 using WPI.WebApi.Data;
+using WPI.WebApi.Services.Generic;
+using WPI.WebApi.Services.IRepository;
+using WPI.WebApi.Services.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
+;
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
