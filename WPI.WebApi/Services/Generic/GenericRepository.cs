@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using WPI.WebApi.Data;
 
@@ -7,9 +8,11 @@ namespace WPI.WebApi.Services.Generic
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
-        public GenericRepository(ApplicationDbContext context)
+        protected readonly IMapper _mapper;
+        public GenericRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<T> Add(T entity)

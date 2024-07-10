@@ -17,8 +17,18 @@ builder.Services.AddDbContext<ApplicationDbContext>
 
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
+builder.Services.AddTransient<IDiscountRepository, DiscountRepository>();
+builder.Services.AddTransient<IOrderDetailsRepository,OrderDetailsRepository>();
+builder.Services.AddTransient<IOrderItemsRepository, OrderItemsRepository>();
+builder.Services.AddTransient<IPaymentDetailsRepository, PaymentDetailsRepository>();
 builder.Services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
-;
+builder.Services.AddTransient<IProductInventoryRepository, ProductInventoryRepository>();
+builder.Services.AddTransient<IProductRepository,IProductRepository>();
+builder.Services.AddTransient<IShoppingSessionRepository, ShoppingSessionRepository>();
+builder.Services.AddTransient<IUserPaymentRepository, UserPaymentRepository>();
+builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -65,6 +75,13 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new DateConverter());
 });
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddHttpsRedirection(options =>
+    {     
+        options.HttpsPort = 443;
+    });
+}
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -74,11 +91,19 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
+if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
+
 app.UseCors("AllowOrigin");
 app.UseHttpsRedirection();
 app.UseAuthentication();

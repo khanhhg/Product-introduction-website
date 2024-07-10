@@ -59,7 +59,7 @@ namespace WPI.WebApi.Controllers
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo,
                         userID = user.Id,
-                        HoVaTen = user.UserName
+                        UserName = user.UserName
                     });
                 }
                 else

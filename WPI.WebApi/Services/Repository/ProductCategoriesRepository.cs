@@ -8,12 +8,9 @@ using WPI.WebApi.Services.IRepository;
 namespace WPI.WebApi.Services.Repository
 {
     public class ProductCategoriesRepository : GenericRepository<ProductCategory>, IProductCategoriesRepository
-    {
-        private readonly ApplicationDbContext _context;
-        public ProductCategoriesRepository(ApplicationDbContext context): base(context)
-        {
-            _context = context ??
-                throw new ArgumentNullException(nameof(context));         
+    {     
+        public ProductCategoriesRepository(ApplicationDbContext context, IMapper mapper): base(context,mapper)
+        {          
         }        
     }
 }
