@@ -8,7 +8,9 @@ namespace WPI.WebApi.Data.Models.EF
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public int OrderId { get; set; }
+        public int? Order_Id { get; set; }
+        [ForeignKey("Order_Id")]
+        public OrderDetails? OrderDetails { get; set; }
         public int Amount { get; set; }
         public string Provider { get; set; }
         public string Status { get; set; }

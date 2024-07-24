@@ -25,7 +25,7 @@ builder.Services.AddTransient<IOrderItemsRepository, OrderItemsRepository>();
 builder.Services.AddTransient<IPaymentDetailsRepository, PaymentDetailsRepository>();
 builder.Services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
 builder.Services.AddTransient<IProductInventoryRepository, ProductInventoryRepository>();
-builder.Services.AddTransient<IProductRepository,IProductRepository>();
+builder.Services.AddTransient<IProductRepository,ProductRepository>();
 builder.Services.AddTransient<IShoppingSessionRepository, ShoppingSessionRepository>();
 builder.Services.AddTransient<IUserPaymentRepository, UserPaymentRepository>();
 builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository>();

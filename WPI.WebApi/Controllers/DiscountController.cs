@@ -11,11 +11,11 @@ namespace WPI.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CartItemController : ControllerBase
+    public class DiscountController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CartItemController(IUnitOfWork unitOfWork, IMapper mapper)
+        public DiscountController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -24,20 +24,20 @@ namespace WPI.WebApi.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _unitOfWork.CartItemRepos.GetAll());
+            return Ok(await _unitOfWork.DiscountRepos.GetAll());
         }
         [HttpGet]
         [Route("GetById/{Id}")]
         public IActionResult GetById(int Id)
         {
-            return Ok(_unitOfWork.CartItemRepos.GetById(Id));
+            return Ok(_unitOfWork.DiscountRepos.GetById(Id));
         }
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Post(CartItemDto cartItemDto)
+        public async Task<IActionResult> Post(DiscountDto DiscountDto)
         {
-            var objCartItem = _mapper.Map<CartItem>(cartItemDto);
-            var result = await _unitOfWork.CartItemRepos.Add(objCartItem);
+            var objDiscount = _mapper.Map<Discount>(DiscountDto);
+            var result = await _unitOfWork.DiscountRepos.Add(objDiscount);
             _unitOfWork.Save();
             if (result.Id == 0)
             {
@@ -50,11 +50,11 @@ namespace WPI.WebApi.Controllers
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Put(CartItemDto cartItemDto)
+        public IActionResult Put(DiscountDto DiscountDto)
         {
-            var objCartItem = _mapper.Map<CartItem>(cartItemDto);
-            objCartItem.Modified_at = DateTime.Now;
-            _unitOfWork.CartItemRepos.Update(objCartItem);
+            var objDiscount = _mapper.Map<Discount>(DiscountDto);
+            objDiscount.Modified_at = DateTime.Now;
+            _unitOfWork.DiscountRepos.Update(objDiscount);
             _unitOfWork.Save();
             return Ok("Update Success");
         }
@@ -62,11 +62,10 @@ namespace WPI.WebApi.Controllers
         [Route("Delete")]
         public JsonResult Delete(int id)
         {
-            var objCartItem = _unitOfWork.CartItemRepos.GetById(id);
-            _unitOfWork.CartItemRepos.Remove(objCartItem);
+            var objDiscount = _unitOfWork.DiscountRepos.GetById(id);
+            _unitOfWork.DiscountRepos.Remove(objDiscount);
             _unitOfWork.Save();
             return new JsonResult("Delete Success");
         }
-       
     }
 }

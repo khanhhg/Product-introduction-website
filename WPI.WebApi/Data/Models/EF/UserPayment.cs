@@ -9,11 +9,12 @@ namespace WPI.WebApi.Data.Models.EF
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public required string User_Id { get; set; }
         public string PaymentType { get; set; }
         public string Provider { get; set; }
         public string AccountNo { get; set; }
         public DateTime Expiry { get; set; }
-        public IdentityUser User { get; set; }
+        [ForeignKey("User_Id")]
+        public required IdentityUser User { get; set; }
     }
 }

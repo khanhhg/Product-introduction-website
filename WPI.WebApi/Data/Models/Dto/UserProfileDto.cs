@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
-
-namespace WPI.WebApi.Data.Models.EF
+﻿namespace WPI.WebApi.Data.Models.Dto
 {
-    public class UserProfile
+    public class UserProfileDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         public int Id { get; set; }
         public string FistName { get; set; }
         public string LastName { get; set; }
@@ -18,8 +12,6 @@ namespace WPI.WebApi.Data.Models.EF
         public string Postal_Code { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
-    
-        [ForeignKey("User_Id")]
-        public required IdentityUser User { get; set; }
+        public DateTime? Created_at { get; set; } = DateTime.Now;
     }
 }

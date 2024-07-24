@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using WPI.WebApi.Data.Models.EF;
 namespace WPI.WebApi.Data
 {
@@ -21,17 +22,23 @@ namespace WPI.WebApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductCategory>()
-                        .HasMany(e => e.Product)
-                        .WithOne(e => e.ProductCategory)
-                        .HasForeignKey(e => e.CategoryId)
-                        .IsRequired();
+            //modelBuilder.Entity<ProductCategory>()
+            //            .HasMany(e => e.Product)
+            //            .WithOne(e => e.ProductCategory)
+            //            .HasForeignKey(e => e.CategoryId)
+            //            .IsRequired();
 
-            modelBuilder.Entity<ProductInventory>()
-                       .HasMany(e => e.Product)
-                       .WithOne(e => e.ProductInventory)
-                       .HasForeignKey(e => e.InventoryId)
-                       .IsRequired();
+            //modelBuilder.Entity<ProductInventory>()
+            //           .HasMany(e => e.Product)
+            //           .WithOne(e => e.ProductInventory)
+            //           .HasForeignKey(e => e.InventoryId)
+            //           .IsRequired();
+
+            modelBuilder.Entity<OrderDetails>()
+            .HasOne(e => e.PaymentDetails)
+            .WithOne(e => e.OrderDetails)
+            .HasForeignKey<PaymentDetails>(e => e.Order_Id)
+            .IsRequired(false);
 
             base.OnModelCreating(modelBuilder);
         }

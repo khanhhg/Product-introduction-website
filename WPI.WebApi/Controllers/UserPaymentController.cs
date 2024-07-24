@@ -11,11 +11,11 @@ namespace WPI.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CartItemController : ControllerBase
+    public class UserPaymentController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CartItemController(IUnitOfWork unitOfWork, IMapper mapper)
+        public UserPaymentController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -24,20 +24,20 @@ namespace WPI.WebApi.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _unitOfWork.CartItemRepos.GetAll());
+            return Ok(await _unitOfWork.UserPaymentRepos.GetAll());
         }
         [HttpGet]
         [Route("GetById/{Id}")]
         public IActionResult GetById(int Id)
         {
-            return Ok(_unitOfWork.CartItemRepos.GetById(Id));
+            return Ok(_unitOfWork.UserPaymentRepos.GetById(Id));
         }
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Post(CartItemDto cartItemDto)
+        public async Task<IActionResult> Post(UserPaymentDto UserPaymentDto)
         {
-            var objCartItem = _mapper.Map<CartItem>(cartItemDto);
-            var result = await _unitOfWork.CartItemRepos.Add(objCartItem);
+            var objUserPayment = _mapper.Map<UserPayment>(UserPaymentDto);
+            var result = await _unitOfWork.UserPaymentRepos.Add(objUserPayment);
             _unitOfWork.Save();
             if (result.Id == 0)
             {
@@ -50,11 +50,10 @@ namespace WPI.WebApi.Controllers
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Put(CartItemDto cartItemDto)
+        public IActionResult Put(UserPaymentDto UserPaymentDto)
         {
-            var objCartItem = _mapper.Map<CartItem>(cartItemDto);
-            objCartItem.Modified_at = DateTime.Now;
-            _unitOfWork.CartItemRepos.Update(objCartItem);
+            var objUserPayment = _mapper.Map<UserPayment>(UserPaymentDto);           
+            _unitOfWork.UserPaymentRepos.Update(objUserPayment);
             _unitOfWork.Save();
             return Ok("Update Success");
         }
@@ -62,11 +61,10 @@ namespace WPI.WebApi.Controllers
         [Route("Delete")]
         public JsonResult Delete(int id)
         {
-            var objCartItem = _unitOfWork.CartItemRepos.GetById(id);
-            _unitOfWork.CartItemRepos.Remove(objCartItem);
+            var objUserPayment = _unitOfWork.UserPaymentRepos.GetById(id);
+            _unitOfWork.UserPaymentRepos.Remove(objUserPayment);
             _unitOfWork.Save();
             return new JsonResult("Delete Success");
         }
-       
     }
 }

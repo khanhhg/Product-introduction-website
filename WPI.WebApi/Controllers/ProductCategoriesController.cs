@@ -54,6 +54,7 @@ namespace WPI.WebApi.Controllers
         public IActionResult Put(ProductCategoryDto objDto)
         {
             var objProductCategory = _mapper.Map<ProductCategory>(objDto);
+            objProductCategory.Modified_at = DateTime.Now;
            _unitOfWork.ProductCategoriesRepos.Update(objProductCategory);
             return Ok("Update success");
         }
